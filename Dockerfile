@@ -14,8 +14,10 @@ EXPOSE 8000
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    # apk add --update --no-cache postgresql-client && \
-    # apk add --update --no-cache --virtual .tmp-build-deps \
+    apk add --update --no-cache postgresql-client && \
+    
+    apk add --update --no-cache --virtual .tmp-build-deps \
+        build-base postgresql-dev musl-dev && \
     #     gcc libc-dev linux-headers postgresql-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     # if [ $DEV = "true" ] ; \
@@ -24,7 +26,7 @@ RUN python -m venv /py && \
     if [ $DEV = "true" ]; \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
     fi && \
-    # apk del .tmp-build-deps && \
+    apk del .tmp-build-deps && \
     rm -rf /tmp && \
     ### create user to avoid using docker root user
     adduser \ 
