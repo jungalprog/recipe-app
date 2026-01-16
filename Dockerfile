@@ -15,8 +15,7 @@ EXPOSE 8000
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache postgresql-client jpeg-dev && \
-    
+    apk add --update --no-cache postgresql-client jpeg-dev libcrypt && \    
     apk add --update --no-cache --virtual .tmp-build-deps \
         build-base postgresql-dev musl-dev zlib zlib-dev linux-headers && \
     #     gcc libc-dev linux-headers postgresql-dev && \
